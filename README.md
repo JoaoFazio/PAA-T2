@@ -1,10 +1,4 @@
-Sim, claro! Transformar o relatório em um README.md para o GitHub é uma ótima ideia. O formato Markdown é mais direto e ideal para apresentar um projeto de software.
-
-Abaixo está uma versão do seu relatório adaptada para o formato README.md. Ele mantém toda a análise e os resultados, mas com uma estrutura mais adequada para o GitHub, incluindo as instruções de como compilar e executar o código.
-
-Você pode copiar este texto todo e colar em um novo arquivo chamado README.md no seu repositório.
-
-2º Trabalho de PAA: Floyd-Warshall vs. Dijkstra para Caminhos Mínimos
+##2º Trabalho de PAA: Floyd-Warshall vs. Dijkstra para Caminhos Mínimos
 
 Análise teórica e empírica de algoritmos para o problema de encontrar o caminho mínimo entre todos os pares de vértices em um grafo.
 
