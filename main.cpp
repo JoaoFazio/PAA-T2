@@ -77,8 +77,8 @@ bool comparar_matrizes(const std::vector<std::vector<int>> &A, const std::vector
     for (int i = 0; i < V; ++i)
         for (int j = 0; j < V; ++j)
             if (A[i][j] != B[i][j])
-                return false;
-    return true;
+                return false; // se achar algo diferente, retorna falso
+    return true;              // se todas as entradas forem iguais, retorna verdadeiro
 }
 
 // Floyd-Warshall
