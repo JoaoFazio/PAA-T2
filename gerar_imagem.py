@@ -23,7 +23,7 @@ def desenhar_matriz(ax, matriz, titulo):
 # Crie a pasta de saída se não existir
 os.makedirs("comparacoes", exist_ok=True)
 
-# Lista de tamanhos que você mencionou
+# Lista
 tamanhos = [10, 25, 50, 75, 100, 150, 200, 250, 300, 400, 500, 650, 800, 1000, 1500]
 
 for tamanho in tamanhos:

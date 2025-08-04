@@ -8,25 +8,32 @@
 const int INF = 999999;
 
 // Função para ler o grafo
-std::vector<std::vector<int>> ler_grafo(const std::string& path, int& V) {
+std::vector<std::vector<int>> ler_grafo(const std::string &path, int &V)
+{
     std::ifstream arquivo(path);
-    if (!arquivo.is_open()) {
+    if (!arquivo.is_open())
+    {
         V = 0;
         return {};
     }
 
     arquivo >> V;
-    if (V == 0) return {};
+    if (V == 0)
+        return {};
 
     std::vector<std::vector<int>> grafo(V, std::vector<int>(V));
-    for (int i = 0; i < V; ++i) {
-        for (int j = 0; j < V; ++j) {
-            if (!(arquivo >> grafo[i][j])) {
+    for (int i = 0; i < V; ++i)
+    {
+        for (int j = 0; j < V; ++j)
+        {
+            if (!(arquivo >> grafo[i][j]))
+            {
                 std::cerr << "Erro ao ler a matriz (" << i << ", " << j << ")\n";
                 V = 0;
                 return {};
             }
-            if (i != j && grafo[i][j] == 0) {
+            if (i != j && grafo[i][j] == 0)
+            {
                 grafo[i][j] = INF;
             }
         }
@@ -35,9 +42,12 @@ std::vector<std::vector<int>> ler_grafo(const std::string& path, int& V) {
 }
 
 // Função para imprimir matriz
-void imprimir_matriz(const std::vector<std::vector<int>>& matriz, int V) {
-    for (int i = 0; i < V; ++i) {
-        for (int j = 0; j < V; ++j) {
+void imprimir_matriz(const std::vector<std::vector<int>> &matriz, int V)
+{
+    for (int i = 0; i < V; ++i)
+    {
+        for (int j = 0; j < V; ++j)
+        {
             if (matriz[i][j] >= INF)
                 std::cout << std::setw(7) << "INF";
             else
@@ -48,10 +58,13 @@ void imprimir_matriz(const std::vector<std::vector<int>>& matriz, int V) {
 }
 
 // Função para salvar matriz em arquivo
-void salvar_matriz_em_arquivo(const std::string& nome, const std::vector<std::vector<int>>& matriz, int V) {
+void salvar_matriz_em_arquivo(const std::string &nome, const std::vector<std::vector<int>> &matriz, int V)
+{
     std::ofstream out(nome);
-    for (int i = 0; i < V; ++i) {
-        for (int j = 0; j < V; ++j) {
+    for (int i = 0; i < V; ++i)
+    {
+        for (int j = 0; j < V; ++j)
+        {
             out << (matriz[i][j] >= INF ? -1 : matriz[i][j]) << (j == V - 1 ? "" : " ");
         }
         out << "\n";
@@ -59,15 +72,18 @@ void salvar_matriz_em_arquivo(const std::string& nome, const std::vector<std::ve
 }
 
 // Comparar duas matrizes
-bool comparar_matrizes(const std::vector<std::vector<int>>& A, const std::vector<std::vector<int>>& B, int V) {
+bool comparar_matrizes(const std::vector<std::vector<int>> &A, const std::vector<std::vector<int>> &B, int V)
+{
     for (int i = 0; i < V; ++i)
         for (int j = 0; j < V; ++j)
-            if (A[i][j] != B[i][j]) return false;
+            if (A[i][j] != B[i][j])
+                return false;
     return true;
 }
 
 // Floyd-Warshall
-std::vector<std::vector<int>> floyd_warshall(const std::vector<std::vector<int>>& grafo, int V) {
+std::vector<std::vector<int>> floyd_warshall(const std::vector<std::vector<int>> &grafo, int V)
+{
     std::vector<std::vector<int>> dist = grafo;
     for (int k = 0; k < V; ++k)
         for (int i = 0; i < V; ++i)
@@ -78,7 +94,8 @@ std::vector<std::vector<int>> floyd_warshall(const std::vector<std::vector<int>>
 }
 
 // Dijkstra
-int encontrar_min_dist(const std::vector<int>& dist, const std::vector<bool>& visitado, int V) {
+int encontrar_min_dist(const std::vector<int> &dist, const std::vector<bool> &visitado, int V)
+{
     int min_dist = INF, min_index = -1;
     for (int v = 0; v < V; ++v)
         if (!visitado[v] && dist[v] < min_dist)
@@ -86,14 +103,17 @@ int encontrar_min_dist(const std::vector<int>& dist, const std::vector<bool>& vi
     return min_index;
 }
 
-std::vector<int> dijkstra_simples(const std::vector<std::vector<int>>& grafo, int V, int origem) {
+std::vector<int> dijkstra_simples(const std::vector<std::vector<int>> &grafo, int V, int origem)
+{
     std::vector<int> dist(V, INF);
     std::vector<bool> visitado(V, false);
     dist[origem] = 0;
 
-    for (int count = 0; count < V; ++count) {
+    for (int count = 0; count < V; ++count)
+    {
         int u = encontrar_min_dist(dist, visitado, V);
-        if (u == -1) break;
+        if (u == -1)
+            break;
         visitado[u] = true;
 
         for (int v = 0; v < V; ++v)
@@ -103,24 +123,27 @@ std::vector<int> dijkstra_simples(const std::vector<std::vector<int>>& grafo, in
     return dist;
 }
 
-std::vector<std::vector<int>> dijkstra_v_vezes(const std::vector<std::vector<int>>& grafo, int V) {
+std::vector<std::vector<int>> dijkstra_v_vezes(const std::vector<std::vector<int>> &grafo, int V)
+{
     std::vector<std::vector<int>> caminhos(V);
     for (int i = 0; i < V; ++i)
         caminhos[i] = dijkstra_simples(grafo, V, i);
     return caminhos;
 }
 
-// MAIN
-int main() {
+int main()
+{
     std::vector<std::string> arquivos = {
-        "Entrada 10.txt"  // pode adicionar mais arquivos aqui
+        "Entrada 1500.txt" // Só mudar o número do arquivo aqui
     };
 
-    for (const auto& nome_arquivo : arquivos) {
+    for (const auto &nome_arquivo : arquivos)
+    {
         int V;
         std::vector<std::vector<int>> grafo = ler_grafo(nome_arquivo, V);
 
-        if (V == 0) {
+        if (V == 0)
+        {
             std::cerr << "ERRO: Falha ao ler " << nome_arquivo << "\n";
             continue;
         }
@@ -131,11 +154,13 @@ int main() {
         // Floyd
         std::vector<double> tempos_floyd;
         std::vector<std::vector<int>> matriz_floyd;
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; ++i)
+        {
             auto ini = std::chrono::high_resolution_clock::now();
             matriz_floyd = floyd_warshall(grafo, V);
             auto fim = std::chrono::high_resolution_clock::now();
-            if (i > 0) {
+            if (i > 0)
+            {
                 std::chrono::duration<double, std::micro> duracao = fim - ini;
                 tempos_floyd.push_back(duracao.count());
             }
@@ -144,11 +169,13 @@ int main() {
         // Dijkstra
         std::vector<double> tempos_dijkstra;
         std::vector<std::vector<int>> matriz_dijkstra;
-        for (int i = 0; i < 6; ++i) {
+        for (int i = 0; i < 6; ++i)
+        {
             auto ini = std::chrono::high_resolution_clock::now();
             matriz_dijkstra = dijkstra_v_vezes(grafo, V);
             auto fim = std::chrono::high_resolution_clock::now();
-            if (i > 0) {
+            if (i > 0)
+            {
                 std::chrono::duration<double, std::micro> duracao = fim - ini;
                 tempos_dijkstra.push_back(duracao.count());
             }
@@ -164,7 +191,8 @@ int main() {
         bool iguais = comparar_matrizes(matriz_floyd, matriz_dijkstra, V);
         std::cout << "As matrizes sao " << (iguais ? "IGUAIS" : "DIFERENTES") << "\n";
 
-        if (V <= 25) {
+        if (V <= 25)
+        {
             std::cout << "\n--- Matriz Floyd-Warshall ---\n";
             imprimir_matriz(matriz_floyd, V);
             std::cout << "\n--- Matriz Dijkstra V vezes ---\n";
@@ -175,7 +203,6 @@ int main() {
         std::string nome_base = nome_arquivo.substr(0, nome_arquivo.find(".txt"));
         salvar_matriz_em_arquivo(nome_base + "_floyd.txt", matriz_floyd, V);
         salvar_matriz_em_arquivo(nome_base + "_dijkstra.txt", matriz_dijkstra, V);
-
     }
 
     return 0;
