@@ -77,8 +77,8 @@ bool comparar_matrizes(const std::vector<std::vector<int>> &A, const std::vector
     for (int i = 0; i < V; ++i)
         for (int j = 0; j < V; ++j)
             if (A[i][j] != B[i][j])
-                return false; // se achar algo diferente, retorna falso
-    return true;              // se todas as entradas forem iguais, retorna verdadeiro
+                return false;
+    return true;
 }
 
 // Floyd-Warshall
@@ -134,7 +134,7 @@ std::vector<std::vector<int>> dijkstra_v_vezes(const std::vector<std::vector<int
 int main()
 {
     std::vector<std::string> arquivos = {
-        "Entrada 1500.txt" // Só mudar o número do arquivo aqui
+        "Entrada 10.txt" // Altere aqui os arquivos de teste
     };
 
     for (const auto &nome_arquivo : arquivos)
@@ -161,7 +161,7 @@ int main()
             auto fim = std::chrono::high_resolution_clock::now();
             if (i > 0)
             {
-                std::chrono::duration<double, std::micro> duracao = fim - ini;
+                std::chrono::duration<double, std::milli> duracao = fim - ini;
                 tempos_floyd.push_back(duracao.count());
             }
         }
@@ -176,7 +176,7 @@ int main()
             auto fim = std::chrono::high_resolution_clock::now();
             if (i > 0)
             {
-                std::chrono::duration<double, std::micro> duracao = fim - ini;
+                std::chrono::duration<double, std::milli> duracao = fim - ini;
                 tempos_dijkstra.push_back(duracao.count());
             }
         }
@@ -184,12 +184,12 @@ int main()
         double media_floyd = std::accumulate(tempos_floyd.begin(), tempos_floyd.end(), 0.0) / tempos_floyd.size();
         double media_dijkstra = std::accumulate(tempos_dijkstra.begin(), tempos_dijkstra.end(), 0.0) / tempos_dijkstra.size();
 
-        std::cout << "Tempo medio Floyd-Warshall: " << std::fixed << std::setprecision(4) << media_floyd << " us\n";
-        std::cout << "Tempo medio Dijkstra V vezes: " << std::fixed << std::setprecision(4) << media_dijkstra << " us\n";
+        std::cout << "Tempo médio Floyd-Warshall: " << std::fixed << std::setprecision(4) << media_floyd << " ms\n";
+        std::cout << "Tempo médio Dijkstra V vezes: " << std::fixed << std::setprecision(4) << media_dijkstra << " ms\n";
 
         // Comparação
         bool iguais = comparar_matrizes(matriz_floyd, matriz_dijkstra, V);
-        std::cout << "As matrizes sao " << (iguais ? "IGUAIS" : "DIFERENTES") << "\n";
+        std::cout << "As matrizes são " << (iguais ? "IGUAIS" : "DIFERENTES") << "\n";
 
         if (V <= 25)
         {
@@ -199,7 +199,7 @@ int main()
             imprimir_matriz(matriz_dijkstra, V);
         }
 
-        // Salvar as matrizes em arquivos para o Python
+        // Salvar as matrizes em arquivos
         std::string nome_base = nome_arquivo.substr(0, nome_arquivo.find(".txt"));
         salvar_matriz_em_arquivo(nome_base + "_floyd.txt", matriz_floyd, V);
         salvar_matriz_em_arquivo(nome_base + "_dijkstra.txt", matriz_dijkstra, V);
